@@ -1,0 +1,87 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+spring:
+  data:
+    redis:
+      repositories:
+        #禁用redis扫描repositories
+        enabled: false
+  redis:
+    host: localhost
+    database: 0
+    password: 123456
+  datasource:
+    #JDBC驱动
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #数据库服务器url
+    url: jdbc:mysql://localhost:3306/freight?serverTimezone=Asia/Shanghai
+    #数据库服务器用户名和密码
+    username: root
+    password: ljq20030120..
+    #数据库连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      #初始化时建立物理连接的个数
+      initial-size: 3
+      #最小连接池数量
+      min-idle: 3
+      #最大连接池数量
+      max-active: 100
+      #获取连接时最大等待时间
+      max-wait: 60000
+      #配置监控页面访问登录名及密码
+      stat-view-servlet:
+        login-username: admin
+        login-password: 123456
+        enabled: true
+        url-pattern: /druid/*
+
+      filter:
+        stat:
+          #是否开启慢sql查询监控
+          log-slow-sql: true
+          #慢SQL执行时间
+          slow-sql-millis: 100
+      validation-query: select 1
+  jackson:
+    #JSON的时间数据的时区
+    time-zone: GMT+8
+
+mybatis:
+  configuration:
+    #输出产生的SQL
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #字段名和对象属性用驼峰映射
+    map-underscore-to-camel-case: true
+
+pagehelper:
+  reasonable: true
+  helper-dialect: mysql
+
+server:
+  port: 8080
+  tomcat:
+    threads:
+      #最大工作线程数
+      max: 2000
+      #最小工作线程数
+      min-spare: 100
+
+oomall:
+  core:
+    page-size:
+      max: 1000
+      default: 10
+  payment:
+    shop-channel:
+      timeout: 3600
+  freight:
+    logistics:
+      timeout: 3600
+#    express:
+#      #快递运输时长上限，不超过15天，超过认定为丢件
+#      upperLimitTransportTime: 1296000
+
